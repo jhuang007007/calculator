@@ -1,10 +1,14 @@
 h1 {
   text-align: center;
 }
-
 .displaycalc {
+  display: flex;
   grid-area: displaycalc;
-  text-align: right;
+  justify-content: flex-end;
+  align-items: flex-end;
+  vertical-align: bottom;
+  border: 1px solid gray;
+  height: 30px;
 }
 .one {
   grid-area: one;
@@ -58,6 +62,7 @@ h1 {
 button {
   border: 1px solid gray;
   border-radius: 15px;
+  font-size: 15px;
 }
 
 .container {
