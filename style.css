@@ -58,6 +58,9 @@ h1 {
 .equals {
   grid-area: equals;
 }
+.clearentry {
+  grid-area: clearentry;
+}
 
 button {
   border: 1px solid gray;
@@ -73,7 +76,7 @@ button {
   justify-content: center;
   grid-template-areas: 
     'displaycalc displaycalc displaycalc displaycalc'
-    '. . . clear'
+    '. . clear clearentry'
     'seven eight nine divide'
     'four five six multiply'
     'one two three subtract'

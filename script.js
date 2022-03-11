@@ -1,27 +1,58 @@
-function clear() {
-  const displaycalc = document.querySelector('.displaycalc');
-  const clearbutton = document.querySelector('.container .clear');
-  clearbutton.addEventListener('click', () => {
-    displaycalc.textContent = '';
-  });
+function add(a, b) {
+  return a + b;
 }
 
-function operate(operator, a, b) {
-  
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  if (b === 0) {
+    alert('ERROR: divide by zero');
+    return null;
+  }
+  return a / b;
 }
 
 function displayCalculation() {
   const displaycalc = document.querySelector('.displaycalc');
-  const numberbuttons = document.querySelectorAll('.container .number');
+  const numberbuttons = document.querySelectorAll('.number');
+  const operatorbuttons = document.querySelectorAll('.operator');
+  const clearbutton = document.querySelector('.clear');
+  const clearentrybutton = document.querySelector('.clearentry');
   numberbuttons.forEach((numberbutton) => {
     numberbutton.addEventListener('click', () => {
-      displaycalc.textContent += numberbutton.textContent;
+      displaycalc.textContent += `${numberbutton.textContent}`;
+      operateWhenTwoOperators();
     });
+  });
+  operatorbuttons.forEach((operatorbutton) => {
+    operatorbutton.addEventListener('click', () => {
+      displaycalc.textContent += ` ${operatorbutton.textContent} `;
+      operateWhenTwoOperators();
+    });
+  });
+  clearbutton.addEventListener('click', () => {
+    displaycalc.textContent = '';
+    operateWhenTwoOperators();
+  });
+  clearentrybutton.addEventListener('click', () => {
+    displaycalc.textContent = displaycalc.textContent.slice(0,-1);
+    operateWhenTwoOperators();
   });
 }
 
 function displayCalculationHotKeys() {
+  //hotkey for numbers
   document.addEventListener('keydown', getNumberFromKeyEvent);
+  //hotkey for operators
+  document.addEventListener('keydown', getOperatorFromKeyEvent);
+  //hotkey for backspace
+  document.addEventListener('keydown', clearLastEntryKeyEvent);
 }
 
 function getNumberFromKeyEvent(event) {
@@ -36,6 +67,58 @@ function getNumberFromKeyEvent(event) {
   return null;
 }
 
+function getOperatorFromKeyEvent(event) {
+  const displaycalc = document.querySelector('.displaycalc');
+  if (event.keyCode === 61 || event.keyCode === 107) {
+    displaycalc.textContent += ' + ';
+  }
+  if (event.keyCode === 88 || event.keyCode === 106) {
+    displaycalc.textContent += ' − ';
+  }
+  if (event.keyCode === 173 || event.keyCode === 109) {
+    displaycalc.textContent += ' − ';
+  }
+  if (event.keyCode === 191 || event.keyCode === 111) {
+    displaycalc.textContent += ' ÷ ';
+  }
+  operateWhenTwoOperators();
+}
+
+function clearLastEntryKeyEvent(event) {
+  const displaycalc = document.querySelector('.displaycalc');
+  if (event.keyCode === 8) {
+    displaycalc.textContent = displaycalc.textContent.slice(0,-1);
+  }
+  return null;
+}
+
+function operate() {
+  const displaycalc = document.querySelector('.displaycalc');
+  const displayArray = displaycalc.textContent.split(' ');
+  if (displayArray.includes('+')) {
+    displaycalc.textContent = add(+displayArray[0], +displayArray[2]);
+  } else if (displayArray.includes('−')) {
+    displaycalc.textContent = subtract(+displayArray[0], +displayArray[2]);
+  } else if (displayArray.includes('x')) {
+    displaycalc.textContent = multiply(+displayArray[0], +displayArray[2]);
+  } else if (displayArray.includes('÷')) {
+    displaycalc.textContent = divide(+displayArray[0], +displayArray[2]);
+  }
+  return null;
+}
+
+function operateButtonClick() {
+  const operatebutton = document.querySelector('.equals'); 
+  operatebutton.addEventListener('click', operate);
+}
+
+function operateWhenTwoOperators() {
+  const displaycalc = document.querySelector('.displaycalc');
+  if ((displaycalc.textContent.match(/.*(\+|−|÷|x).*(\+|−|÷|x)/) || []).length) {
+    operate();
+  }
+}
+
 displayCalculationHotKeys();
 displayCalculation();
-clear();
+operateButtonClick();
