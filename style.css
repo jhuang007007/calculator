@@ -1,3 +1,10 @@
+body {
+  font-family: 'Smooch Sans', sans-serif;
+  font-size: 20px;
+  background-color: #22223b;
+  color: #9a8c98;
+}
+
 h1 {
   text-align: center;
 }
@@ -9,6 +16,8 @@ h1 {
   vertical-align: bottom;
   border: 1px solid gray;
   height: 30px;
+  background-color: #f2e9e4;
+  font-family: 'Courier New', Courier, monospace;
 }
 .one {
   grid-area: one;
@@ -66,6 +75,8 @@ button {
   border: 1px solid gray;
   border-radius: 15px;
   font-size: 15px;
+  color: #f2e9e4;
+  background-color: #9a8c98;
 }
 
 .container {

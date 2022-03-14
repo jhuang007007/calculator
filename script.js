@@ -32,6 +32,9 @@ function displayCalculation() {
   });
   operatorbuttons.forEach((operatorbutton) => {
     operatorbutton.addEventListener('click', () => {
+      if (displaycalc.textContent.includes('+')) {
+        displaycalc.textContent.slice(0,-3);
+      }
       displaycalc.textContent += ` ${operatorbutton.textContent} `;
       operateWhenTwoOperators();
     });
@@ -53,6 +56,8 @@ function displayCalculationHotKeys() {
   document.addEventListener('keydown', getOperatorFromKeyEvent);
   //hotkey for backspace
   document.addEventListener('keydown', clearLastEntryKeyEvent);
+  //hotkey for enter
+  document.addEventListener('keydown', operateButtonKeyEvent);
 }
 
 function getNumberFromKeyEvent(event) {
@@ -73,7 +78,7 @@ function getOperatorFromKeyEvent(event) {
     displaycalc.textContent += ' + ';
   }
   if (event.keyCode === 88 || event.keyCode === 106) {
-    displaycalc.textContent += ' − ';
+    displaycalc.textContent += ' x ';
   }
   if (event.keyCode === 173 || event.keyCode === 109) {
     displaycalc.textContent += ' − ';
@@ -112,9 +117,15 @@ function operateButtonClick() {
   operatebutton.addEventListener('click', operate);
 }
 
+function operateButtonKeyEvent(event) {
+  if (event.keyCode === 13) {
+    operate();
+  }
+}
+
 function operateWhenTwoOperators() {
   const displaycalc = document.querySelector('.displaycalc');
-  if ((displaycalc.textContent.match(/.*(\+|−|÷|x).*(\+|−|÷|x)/) || []).length) {
+  if ((displaycalc.textContent.match(/.*([0-9]).*(\+|−|÷|x).*([0-9]).*(\+|−|÷|x)/) || []).length) {
     operate();
   }
 }
